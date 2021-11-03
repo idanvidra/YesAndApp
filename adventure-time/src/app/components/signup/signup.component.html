@@ -2,14 +2,18 @@
   <div class="row">
     <div class="col s10 offset-s1" id="panel">
       <h3 id="title">Sign Up</h3>
-      <form class="col s12">
+      <form class="col s12" [formGroup]="signupForm" novalidate (ngSubmit)="signupUser()">
         <div class="row">
           <div class="input-field col s12">
-            <input id="nickname" type="text" class="validate">
+            <input id="nickname" type="text" class="validate" formControlName="nickname">
             <label for="nickname">Nickname</label>
+            <span class="error"
+              *ngIf="!signupForm.controls['nickname'].valid && signupForm.controls['nickname'].touched">
+              Nickname is required
+            </span>
           </div>
         </div>
-        <button class="btn waves-effect" id="signupbtn">
+        <button class="btn waves-effect" id="signupbtn" [disabled]="!signupForm.valid">
           Sign Up
         </button>
       </form>
