@@ -20,7 +20,7 @@ module.exports = {
         if (error && error.details) {
             return res
                 .status(httpStatus.StatusCodes.BAD_REQUEST)
-                .json({ message: error.details });
+                .json({ msg: error.details });
         }
 
         // check nickname for bad words

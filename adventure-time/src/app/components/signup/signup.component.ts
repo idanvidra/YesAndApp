@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,8 +13,9 @@ export class SignupComponent implements OnInit {
   // set as undefined
   // set as undefined
   signupForm!: FormGroup;
+  errorMessage!: string;
 
-  constructor(private authService: AuthService, private fb: FormBuilder) { }
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.init()
@@ -26,9 +28,24 @@ export class SignupComponent implements OnInit {
   }
 
   signupUser() {
+    // if user signup was successful
     this.authService.registerUser(this.signupForm.value).subscribe(data => {
       console.log(data);
+      // clean the screan after successful signup
       this.signupForm.reset();
-    }, err => console.log(err));
+      // route signed user to the streams route
+      this.router.navigate(['streams']);
+    }, (err) => {
+      // if user signup failed
+      console.log(err);
+      // to display Joi errors
+      if (err.error.msg) {
+        this.errorMessage = err.error.msg[0].message
+      }
+      // to display other kinds of errors
+      if (err.error.message) {
+        this.errorMessage = err.error.message;
+      }
+    });
   }
 }
