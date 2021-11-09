@@ -14,6 +14,7 @@ export class SignupComponent implements OnInit {
   // set as undefined
   signupForm!: FormGroup;
   errorMessage!: string;
+  showSpinner = false;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) { }
 
@@ -28,14 +29,21 @@ export class SignupComponent implements OnInit {
   }
 
   signupUser() {
+    // show spinner while signin is loading
+    this.showSpinner = true;
     // if user signup was successful
     this.authService.registerUser(this.signupForm.value).subscribe(data => {
       console.log(data);
       // clean the screan after successful signup
       this.signupForm.reset();
       // route signed user to the streams route
-      this.router.navigate(['streams']);
+      // wait for 1.75 seconds before routing the user
+      setTimeout(() => {
+        this.router.navigate(['streams']);
+      }, 1750);
     }, (err) => {
+      // stop showing spinner if signup failed
+      this.showSpinner = false;
       // if user signup failed
       console.log(err);
       // to display Joi errors

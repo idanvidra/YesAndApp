@@ -8,6 +8,7 @@ const Helpers = require("../Helpers/helpers");
 const dbConfig = require("../config/secrets");
 
 module.exports = {
+    // function for signing up
     async createUser(req, res) {
         // schema for the authentication form
         // Joi checks if the form was filled out correctly
@@ -85,5 +86,46 @@ module.exports = {
                     ).json({ message: "error occured user creation" });
                 });
         });
+    },
+
+    // function for signing in
+    async loginUser(req, res) {
+        // check to see if the login nickname is empty
+        // send error if so
+        if (!req.body.nickname) {
+            return res
+                .status(httpStatus.StatusCodes.LENGTH_REQUIRED)
+                .json({ message: "no empty nickname allowed" });
+        }
+
+        await User.findOne({ nickname: req.body.username })
+            .then((user) => {
+                // if the user was not found
+                if (!user) {
+                    return res
+                        .status(httpStatus.StatusCodes.NOT_FOUND)
+                        .json({ message: "nickname not found" });
+                }
+                // if loging in is successful create a token
+                // token expires in 10 seconds
+                const token = jwt.sign(
+                    { data: user },
+                    dbConfig.secretForAuthToken,
+                    {
+                        expiresIn: 10000,
+                    }
+                );
+                // add the token as a cookie
+                res.cookie("auth", token);
+                return res
+                    .status(httpStatus.StatusCodes.OK)
+                    .json({ message: "login successful", user, token });
+            })
+            // if there is an error while loging in
+            .catch((err) => {
+                return res
+                    .status(httpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
+                    .json({ message: "error occured while loging in" });
+            });
     },
 };
