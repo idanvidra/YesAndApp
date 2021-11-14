@@ -98,13 +98,13 @@ module.exports = {
                 .json({ message: "no empty nickname allowed" });
         }
 
-        await User.findOne({ nickname: req.body.username })
+        await User.findOne({ nickname: req.body.nickname })
             .then((user) => {
                 // if the user was not found
                 if (!user) {
-                    return res
-                        .status(httpStatus.StatusCodes.NOT_FOUND)
-                        .json({ message: "nickname not found" });
+                    return res.status(httpStatus.StatusCodes.NOT_FOUND).json({
+                        message: "nickname not found",
+                    });
                 }
                 // if loging in is successful create a token
                 // token expires in 10 seconds

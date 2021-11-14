@@ -17,5 +17,11 @@ export class AuthService {
     return this.http.post(`${BASEURL}/register`, body);
   }
 
+  // recives body (that contains the nickname) and returns 
+  // the relevant url for loging in
+  loginUser(body: any): Observable<any> {
+    return this.http.post(`${BASEURL}/login`, body);
+  }
+
 }
 
