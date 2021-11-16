@@ -1,4 +1,7 @@
+import { i18nMetaToJSDoc } from '@angular/compiler/src/render3/view/i18n/meta';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-streams',
@@ -6,10 +9,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./streams.component.css']
 })
 export class StreamsComponent implements OnInit {
+  token: any;
 
-  constructor() { }
+  constructor(private tokenService: TokenService, private router: Router) { }
 
   ngOnInit(): void {
+    this.token = this.tokenService.GetToken();
+    console.log(this.token)
   }
-
 }

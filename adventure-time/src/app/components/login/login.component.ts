@@ -1,7 +1,9 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,12 @@ export class LoginComponent implements OnInit {
   errorMessage!: string;
   showSpinner = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService, 
+    private router: Router,
+    private tokenService: TokenService
+    ) { }
 
   ngOnInit(): void {
     this.init();
@@ -29,7 +36,8 @@ export class LoginComponent implements OnInit {
   loginUser() {
     this.showSpinner = true;
     this.authService.loginUser(this.loginForm.value).subscribe(data => {
-      console.log(data);
+      // set token
+      this.tokenService.SetToken(data.token);
       // clean the screan after successful signup
       this.loginForm.reset();
       // route signed user to the streams route
