@@ -69,7 +69,7 @@ module.exports = {
                         { data: user },
                         dbConfig.secretForAuthToken,
                         {
-                            expiresIn: "1h",
+                            expiresIn: "120h",
                         }
                     );
                     // save token to cookie
@@ -112,7 +112,7 @@ module.exports = {
                     { data: user },
                     dbConfig.secretForAuthToken,
                     {
-                        expiresIn: "1h",
+                        expiresIn: "120h",
                     }
                 );
                 // add the token as a cookie
