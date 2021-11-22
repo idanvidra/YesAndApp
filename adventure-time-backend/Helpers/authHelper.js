@@ -1,4 +1,4 @@
-const jwt = require("jasonwebtoken");
+const jwt = require("jsonwebtoken");
 const HttpStatus = require("http-status-codes");
 const dbconfig = require("../config/secrets");
 

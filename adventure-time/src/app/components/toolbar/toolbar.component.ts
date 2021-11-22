@@ -13,7 +13,6 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.tokenService.GetPayload();
-    console.log(this.user)
   }
 
   logout(){

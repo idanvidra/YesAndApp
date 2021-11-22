@@ -47,6 +47,10 @@ mongoose.connect(dbConfig.urlForDB);
 const auth = require("./routes/authRoutes");
 app.use("/api/adventuretime", auth);
 
+// route for game posting - temporary
+const games = require("./routes/gameRoutes");
+app.use("/api/adventuretime", games);
+
 app.listen(3000, () => {
     console.log("Running on port 3000");
 });
