@@ -1,6 +1,8 @@
 <ul class="collection with-header">
-  <li class="collection-item">
-    <div>Random Game<a href="#!" class="secondary-content"><i class="material-icons">beach_access</i></a></div>
+  <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="['/streams']">
+      <div>Random Game<a href="#!" class="secondary-content"><i class="material-icons">beach_access</i></a></div>
+    </a>
   </li>
   <li class="collection-item">
     <div>Who Is Connected<a href="#!" class="secondary-content"><i class="material-icons">near_me</i></a></div>

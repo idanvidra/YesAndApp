@@ -57,24 +57,37 @@ module.exports = {
             });
     },
 
-    // TODO: (video 89)
-    // 1. get details for schema
-    // 2. create the game in the DB
-    // 3. assync (video 91) add game to user
-
     // get all the games saved by player
     async GetAllGames(req, res) {
         try {
             const games = await Game.find({})
-                .populate("user") // return all the games by this player
+                .populate("player") // return all the games by this player
                 .sort({ created: -1 }); // sort by date created: newest -> oldest
             return res
                 .status(httpStatus.StatusCodes.OK)
                 .json({ message: "All games retrieved", games });
         } catch (err) {
+            console.log(err);
             return res
                 .status(httpStatus.StatusCodes.INTERNAL_SERVER_ERROR)
-                .json({ message: "Failed to retrieve all games" });
+                .json({ message: "Failed to retrieve all games", err });
         }
+    },
+
+    // get single game by ID
+    async GetGame(req, res) {
+        await Game.findOne({ _id: req.params.id })
+            .populate("player")
+            .then((game) => {
+                res.status(httpStatus.StatusCodes.OK).json({
+                    message: "Game found",
+                    game,
+                });
+            })
+            .catch((err) =>
+                res
+                    .status(httpStatus.StatusCodes.NOT_FOUND)
+                    .json({ message: "Game not found", err })
+            );
     },
 };

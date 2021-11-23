@@ -113,6 +113,7 @@ module.exports = {
                     dbConfig.secretForAuthToken,
                     {
                         expiresIn: "120h",
+                        // expiresIn: "10000",
                     }
                 );
                 // add the token as a cookie

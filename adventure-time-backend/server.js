@@ -13,6 +13,12 @@ app.use(cors());
 // link to database
 const dbConfig = require("./config/secrets");
 
+// init socket.io server instance
+// used to get live feedback from the nodejs server
+const server = require("http").createServer(app);
+// const io = require("socket.io")(server).listen(server);
+const io = require("socket.io")(server);
+
 // connect frontend to backend
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Original", "*");
@@ -43,6 +49,9 @@ app.use(logger("dev"));
 mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.urlForDB);
 
+// pass socket.io const to socket/streams.js
+require("./socket/streams")(io);
+
 // route for authentication
 const auth = require("./routes/authRoutes");
 app.use("/api/adventuretime", auth);
@@ -51,6 +60,7 @@ app.use("/api/adventuretime", auth);
 const games = require("./routes/gameRoutes");
 app.use("/api/adventuretime", games);
 
-app.listen(3000, () => {
+// use express server to listen on port 3000
+server.listen(3000, () => {
     console.log("Running on port 3000");
 });
