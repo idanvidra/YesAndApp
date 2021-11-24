@@ -4,8 +4,10 @@
       <div>Random Game<a href="#!" class="secondary-content"><i class="material-icons">beach_access</i></a></div>
     </a>
   </li>
-  <li class="collection-item">
-    <div>Who Is Connected<a href="#!" class="secondary-content"><i class="material-icons">near_me</i></a></div>
+  <li class="collection-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="['/people']">
+      <div>People<a href="#!" class="secondary-content"><i class="material-icons">near_me</i></a></div>
+    </a>
   </li>
   <li class="collection-item">
     <div>Play With Friends<a href="#!" class="secondary-content"><i class="material-icons">hot_tub</i></a></div>

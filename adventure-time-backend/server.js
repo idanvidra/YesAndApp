@@ -60,6 +60,10 @@ app.use("/api/adventuretime", auth);
 const games = require("./routes/gameRoutes");
 app.use("/api/adventuretime", games);
 
+// route for users
+const users = require("./routes/usersRoutes");
+app.use("/api/adventuretime", users);
+
 // use express server to listen on port 3000
 server.listen(3000, () => {
     console.log("Running on port 3000");

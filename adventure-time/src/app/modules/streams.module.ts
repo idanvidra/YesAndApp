@@ -10,6 +10,8 @@ import { GamesService } from '../services/games.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { PeopleComponent } from '../components/people/people.component';
+import { UsersService } from '../services/users.service';
 
 
 
@@ -20,6 +22,7 @@ import { RouterModule } from '@angular/router';
     SideComponent,
     GameFormComponent,
     GamesComponent,
+    PeopleComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +38,7 @@ import { RouterModule } from '@angular/router';
   providers: [
     TokenService,
     GamesService,
+    UsersService
   ]
 })
 export class StreamsModule { }
