@@ -18,6 +18,7 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "@types/lodash": "^4.14.177",
     "loadash": "^1.0.0",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.29.1",

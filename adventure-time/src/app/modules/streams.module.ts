@@ -12,6 +12,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { PeopleComponent } from '../components/people/people.component';
 import { UsersService } from '../services/users.service';
+import { NotificationsComponent } from '../components/notifications/notifications.component';
+import { ChatComponent } from '../components/chat/chat.component';
+import { MessageComponent } from '../components/message/message.component';
 
 
 
@@ -23,6 +26,9 @@ import { UsersService } from '../services/users.service';
     GameFormComponent,
     GamesComponent,
     PeopleComponent,
+    NotificationsComponent,
+    ChatComponent,
+    MessageComponent,
   ],
   imports: [
     CommonModule,

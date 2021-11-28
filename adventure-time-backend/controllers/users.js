@@ -18,4 +18,38 @@ module.exports = {
                 });
             });
     },
+
+    async GetUserById(req, res) {
+        await User.findOne({ _id: req.params.id })
+            .populate("games.gameId")
+            .then((result) => {
+                res.status(httpStatus.StatusCodes.OK).json({
+                    message: "Got user by id successfully",
+                    result,
+                });
+            })
+            .catch((err) => {
+                res.status(httpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                    message: "Couldn't return user by id",
+                    err,
+                });
+            });
+    },
+
+    async GetUserByNickname(req, res) {
+        await User.findOne({ nickanme: req.params.nickanme })
+            .populate("games.gameId")
+            .then((result) => {
+                res.status(httpStatus.StatusCodes.OK).json({
+                    message: "Got user by nickname successfully",
+                    result,
+                });
+            })
+            .catch((err) => {
+                res.status(httpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({
+                    message: "Couldn't return user by nickname",
+                    err,
+                });
+            });
+    },
 };

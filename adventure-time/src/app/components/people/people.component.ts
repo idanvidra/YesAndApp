@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenService } from 'src/app/services/token.service';
 import { UsersService } from 'src/app/services/users.service';
-// import _ from 'loadash';
+import * as _ from 'lodash' ;
 
 @Component({
   selector: 'app-people',
@@ -16,24 +16,25 @@ export class PeopleComponent implements OnInit {
   constructor(private usersService: UsersService, private tokenService: TokenService) { }
 
   ngOnInit(): void {
-    this.loggedInUser = this.tokenService.GetPayload()
+    // get logged in user object from the token
+    this.loggedInUser = this.tokenService.GetPayload();
     this.GetAllUsers();
+    // this.GetUser();
   }
 
+  // get all users except logged in user
   GetAllUsers() {
     this.usersService.GetAllUsers().subscribe(data => {
+      // remove the logged in user from the list
+      _.remove(data.result, {nickname: this.loggedInUser.nickname})
       this.users = data.result;
-      // this.users = this.RemoveItem(data.result, this.loggedInUser);
     });
   }
 
-  RemoveItem<T>(arr: Array<T>, value: T): Array<T> { 
-  const index = arr.indexOf(value);
-  if (index > -1) {
-    arr.splice(index, 1);
-  }
-  return arr;
-}
-
-
+  // GetUser() {
+  //   this.usersService.GetUserById(this.loggedInUser._id).subscribe(data => {
+  //     console.log(data)
+  //   });
+  // }
+  
 }

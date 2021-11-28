@@ -20,4 +20,12 @@ export class UsersService {
   // async GetAllUsers() {
   //   return await this.http.get(`${BASEURL}/users`);
   // }
+
+  GetUserById(id: any): Observable<any>{
+    return this.http.get(`${BASEURL}/user/${id}`);
+  }
+
+  GetUserByNickname(nickname: any): Observable<any>{
+    return this.http.get(`${BASEURL}/usernick/${nickname}`);
+  }
 }
