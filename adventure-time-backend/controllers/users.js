@@ -37,7 +37,7 @@ module.exports = {
     },
 
     async GetUserByNickname(req, res) {
-        await User.findOne({ nickanme: req.params.nickanme })
+        await User.findOne({ nickname: req.params.nickname })
             .populate("games.gameId")
             .then((result) => {
                 res.status(httpStatus.StatusCodes.OK).json({

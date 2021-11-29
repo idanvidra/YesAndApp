@@ -52,17 +52,21 @@ mongoose.connect(dbConfig.urlForDB);
 // pass socket.io const to socket/streams.js
 require("./socket/streams")(io);
 
-// route for authentication
+// route for authentication (middleware)
 const auth = require("./routes/authRoutes");
 app.use("/api/adventuretime", auth);
 
-// route for game posting - temporary
+// route for game posting - temporary (middleware)
 const games = require("./routes/gameRoutes");
 app.use("/api/adventuretime", games);
 
-// route for users
+// route for users (middleware)
 const users = require("./routes/usersRoutes");
 app.use("/api/adventuretime", users);
+
+// route for message (middleware)
+const message = require("./routes/messageRoutes");
+app.use("/api/adventuretime", message);
 
 // use express server to listen on port 3000
 server.listen(3000, () => {

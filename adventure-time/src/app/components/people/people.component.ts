@@ -19,7 +19,6 @@ export class PeopleComponent implements OnInit {
     // get logged in user object from the token
     this.loggedInUser = this.tokenService.GetPayload();
     this.GetAllUsers();
-    // this.GetUser();
   }
 
   // get all users except logged in user

@@ -15,6 +15,7 @@ import { UsersService } from '../services/users.service';
 import { NotificationsComponent } from '../components/notifications/notifications.component';
 import { ChatComponent } from '../components/chat/chat.component';
 import { MessageComponent } from '../components/message/message.component';
+import { MessageService } from '../services/message.service';
 
 
 
@@ -44,7 +45,8 @@ import { MessageComponent } from '../components/message/message.component';
   providers: [
     TokenService,
     GamesService,
-    UsersService
+    UsersService,
+    MessageService
   ]
 })
 export class StreamsModule { }
