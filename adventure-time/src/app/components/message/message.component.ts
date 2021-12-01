@@ -11,7 +11,10 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class MessageComponent implements OnInit {
 
-  recieverName!: string;
+  reciever!: string;
+  user: any;
+  message!: String; // we added an ngModel in the html (textArea) so we can get the string here
+  recieverData: any;
 
   constructor(
     private tokenService: TokenService,
@@ -21,19 +24,24 @@ export class MessageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.user = this.tokenService.GetPayload();
     this.route.params.subscribe(params => {
-      this.recieverName = params.nickname;
-      this.GetUserByNickname(this.recieverName);
+      this.reciever = params.nickname;
+      this.GetUserByNickname(this.reciever);
     })
   }
 
   GetUserByNickname(name:any) {
     this.usersService.GetUserByNickname(name).subscribe(data => {
-      console.log(data)
+      this.recieverData = data.result;
     })
   }
 
   SendMessage() {
-    
+    this.messageService
+      .SendMessage(this.user._id, this.recieverData._id, this.recieverData.nickname, this.message)
+      .subscribe(data => {
+        console.log(data)
+      })
   }
 }
