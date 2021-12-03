@@ -38,10 +38,13 @@ export class MessageComponent implements OnInit {
   }
 
   SendMessage() {
-    this.messageService
+    if (this.message) { // no messages if empty
+      this.messageService
       .SendMessage(this.user._id, this.recieverData._id, this.recieverData.nickname, this.message)
       .subscribe(data => {
         console.log(data)
+        this.message = "" // make field empty after sending
       })
+    }
   }
 }
