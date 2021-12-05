@@ -9,4 +9,10 @@ router.post(
     AuthHelper.VerifyToken,
     MessageCtrl.SendMessage
 );
+
+router.get(
+    "/chat-message/:senderId/:receiverId",
+    AuthHelper.VerifyToken,
+    MessageCtrl.GetAllMessages
+);
 module.exports = router;
