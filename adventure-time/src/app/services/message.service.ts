@@ -19,4 +19,9 @@ export class MessageService {
       message
     })
   }
+
+  // send message from sender to reciever
+  GetAllMessages(senderId:any, receiverId:any): Observable<any> {
+    return this.http.get(`${BASEURL}/chat-message/${senderId}/${receiverId}`);
+  }
 }

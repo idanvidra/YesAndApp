@@ -6,50 +6,30 @@ const User = require("../models/userModel");
 
 module.exports = {
     async GetAllMessages(req, res) {
-        const conversation = null;
-        try {
-            const senderId = req.params.senderId; // given from the route
-            const receiverId = req.params.receiverId;
-            // serch conversation collection for a conversation
-            // we search by the convo by participants Id
-            conversation = await Conversation.findOne({
-                $or: [
-                    {
-                        $and: [
-                            {
-                                "participants.senderId": senderId,
-                            },
-                            {
-                                "participants.receiverId": receiverId,
-                            },
-                        ],
-                    },
-                    {
-                        $and: [
-                            {
-                                "participants.senderId": receiverId,
-                            },
-                            {
-                                "participants.receiverId": senderId,
-                            },
-                        ],
-                    },
-                ],
-                // return only the Id
-            }).select("_id");
-        } catch (err) {
-            res.status(HttpStatus.StatusCodes.INTERNAL_SERVER_ERROR).json({
-                message: "error loading messages",
-                err,
-            });
-        }
+        const { senderId, receiverId } = req.params;
+        const conversation = await Conversation.findOne({
+            $or: [
+                {
+                    $and: [
+                        { "participants.senderId": senderId },
+                        { "participants.receiverId": receiverId },
+                    ],
+                },
+                {
+                    $and: [
+                        { "participants.senderId": receiverId },
+                        { "participants.receiverId": senderId },
+                    ],
+                },
+            ],
+        }).select("_id");
 
         if (conversation) {
             const messages = await Message.findOne({
                 conversationId: conversation._id,
             });
             res.status(HttpStatus.StatusCodes.OK).json({
-                message: "messages returned succesfuly",
+                message: "Messages returned",
                 messages,
             });
         }

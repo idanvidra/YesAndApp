@@ -16,6 +16,7 @@ import { NotificationsComponent } from '../components/notifications/notification
 import { ChatComponent } from '../components/chat/chat.component';
 import { MessageComponent } from '../components/message/message.component';
 import { MessageService } from '../services/message.service';
+import { NgxAutoScrollModule } from "ngx-auto-scroll";
 
 
 
@@ -36,7 +37,8 @@ import { MessageService } from '../services/message.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    NgxAutoScrollModule
   ],
   exports: [
     StreamsComponent,
