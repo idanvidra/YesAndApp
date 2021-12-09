@@ -69,6 +69,7 @@ const message = require("./routes/messageRoutes");
 app.use("/api/adventuretime", message);
 
 // use express server to listen on port 3000
-server.listen(3000, () => {
+const port = process.env.PORT || 3000;
+server.listen(port, () => {
     console.log("Running on port 3000");
 });
