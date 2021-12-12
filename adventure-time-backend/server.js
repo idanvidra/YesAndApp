@@ -11,7 +11,15 @@ const app = express();
 app.use(cors());
 
 // link to database
-const dbConfig = require("./config/secrets");
+let dbConfig = null;
+if (process.env.DB) {
+    dbConfig = {
+        urlForDB: process.env.DB,
+        secretForAuthToken: process.env.SECRET,
+    };
+} else {
+    dbConfig = require("./config/secrets");
+}
 
 // init socket.io server instance
 // used to get live feedback from the nodejs server
@@ -66,6 +74,7 @@ app.use("/api/adventuretime", users);
 
 // route for message (middleware)
 const message = require("./routes/messageRoutes");
+const e = require("express");
 app.use("/api/adventuretime", message);
 
 // use express server to listen on port 3000

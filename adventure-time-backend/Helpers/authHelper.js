@@ -1,6 +1,15 @@
 const jwt = require("jsonwebtoken");
 const HttpStatus = require("http-status-codes");
-const dbconfig = require("../config/secrets");
+// link to database
+let dbConfig = null;
+if (process.env.DB) {
+    dbConfig = {
+        urlForDB: process.env.DB,
+        secretForAuthToken: process.env.SECRET,
+    };
+} else {
+    dbconfig = require("../config/secrets");
+}
 
 // protect routes so only registered and logged in users
 // are accessing the routes

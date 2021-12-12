@@ -5,7 +5,16 @@ const bcrypt = require("bcryptjs");
 
 const User = require("../models/userModel");
 const Helpers = require("../Helpers/helpers");
-const dbConfig = require("../config/secrets");
+// link to database
+let dbConfig = null;
+if (process.env.DB) {
+    dbConfig = {
+        urlForDB: process.env.DB,
+        secretForAuthToken: process.env.SECRET,
+    };
+} else {
+    dbConfig = require("../config/secrets");
+}
 
 module.exports = {
     // function for signing up
