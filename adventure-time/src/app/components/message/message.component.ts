@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'src/app/services/message.service';
 import { TokenService } from 'src/app/services/token.service';
@@ -10,7 +10,7 @@ import io from 'socket.io-client';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit, AfterViewInit {
 
   reciever!: string;
   user: any;
@@ -19,7 +19,9 @@ export class MessageComponent implements OnInit {
   messagesArray = [];
   socketHost: any; // localhost:3000 -> path to node.js application
   socket: any; // emit any event we want
-  yOffset = 10
+  yOffset = 10;
+  typingMessage: any;
+  typing = false;
 
   constructor(
     private tokenService: TokenService,
@@ -43,6 +45,23 @@ export class MessageComponent implements OnInit {
         this.GetUserByNickname(this.reciever);
       })
     })
+
+    // check the emition of is typing event - when the other user is typing
+    this.socket.on('is_typing', (data: any) => {
+      if (data.sender == this.reciever) {
+        console.log(data)
+      }
+    })
+  }
+
+  // when the view is initialized we will emit 'join chat'
+  ngAfterViewInit(): void {
+    const params = {
+      room1: this.user.nickname,
+      room2: this.reciever
+    };
+
+    this.socket.emit('join chat', params);
   }
 
   GetUserByNickname(name:any) {
@@ -69,5 +88,14 @@ export class MessageComponent implements OnInit {
         this.message = "" // make field empty after sending
       })
     }
+  }
+
+  IsTyping() {
+    // typing indicator
+    // emit this when a user is typing in chat
+    this.socket.emit('start_typing', {
+      sender: this.user.nickname,
+      reciever: this.reciever
+    })
   }
 }

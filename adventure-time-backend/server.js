@@ -59,6 +59,7 @@ mongoose.connect(dbConfig.urlForDB);
 
 // pass socket.io const to socket/streams.js
 require("./socket/streams")(io);
+require("./socket/private")(io);
 
 // route for authentication (middleware)
 const auth = require("./routes/authRoutes");
