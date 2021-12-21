@@ -49,7 +49,14 @@ export class MessageComponent implements OnInit, AfterViewInit {
     // check the emition of is typing event - when the other user is typing
     this.socket.on('is_typing', (data: any) => {
       if (data.sender == this.reciever) {
-        console.log(data)
+        this.typing = true;
+      }
+    });
+
+    // check the emition of has_stopped_typing event - when the other user stopped typing
+    this.socket.on('has_stopped_typing', (data: any) => {
+      if (data.sender == this.reciever) {
+        this.typing = false;
       }
     })
   }
@@ -96,6 +103,20 @@ export class MessageComponent implements OnInit, AfterViewInit {
     this.socket.emit('start_typing', {
       sender: this.user.nickname,
       reciever: this.reciever
-    })
+    });
+
+    // stop typing indicator
+    if (this.typingMessage) {
+      clearTimeout(this.typingMessage);
+    }
+
+    this.typingMessage = setTimeout(() => {
+      this.socket.emit('stop_typing', {
+        sender: this.user.nickname,
+        reciever: this.reciever
+      })
+    }, 1000)
   }
+
+
 }

@@ -39,6 +39,15 @@
 
           </div>
         </div>
+
+        <div class="left" *ngIf="typing">
+          <div class="chat-bubble left slide-left">
+            <div class="message">
+              {{reciever}} is typing...
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

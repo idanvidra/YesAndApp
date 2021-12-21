@@ -5,6 +5,8 @@ module.exports = {
     async GetAllUsers(req, res) {
         await User.find({})
             .populate("games.gameId")
+            .populate("chatList.receiverId")
+            .populate("chatList.msgId")
             .then((result) => {
                 res.status(httpStatus.StatusCodes.OK).json({
                     message: "Got all users successfully",
@@ -22,6 +24,8 @@ module.exports = {
     async GetUserById(req, res) {
         await User.findOne({ _id: req.params.id })
             .populate("games.gameId")
+            .populate("chatList.receiverId")
+            .populate("chatList.msgId")
             .then((result) => {
                 res.status(httpStatus.StatusCodes.OK).json({
                     message: "Got user by id successfully",
@@ -39,6 +43,8 @@ module.exports = {
     async GetUserByNickname(req, res) {
         await User.findOne({ nickname: req.params.nickname })
             .populate("games.gameId")
+            .populate("chatList.receiverId")
+            .populate("chatList.msgId")
             .then((result) => {
                 res.status(httpStatus.StatusCodes.OK).json({
                     message: "Got user by nickname successfully",
